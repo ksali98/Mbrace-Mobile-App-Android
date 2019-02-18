@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Oyster Gape Graph</string>
+    <string name="title_activity_select_file">SelectFileActivity</string>
+    <string name="select_file_to_graph">Select File To Graph</string>
+    <string name="acquiring_data">Acquiring Data</string>
+    <string name="select">Select</string>
+    <string name="loading_graph">Loading Graph</string>
+</resources>
