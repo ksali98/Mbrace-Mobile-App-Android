@@ -31,7 +31,7 @@ public class FileSelectActivity extends AppCompatActivity implements AdapterView
         select_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent change_to_acquire_data = new Intent(FileSelectActivity.this,GraphActivity.class);
+                Intent change_to_acquire_data = new Intent(FileSelectActivity.this,RetrieveDataActivity.class);
                 change_to_acquire_data.putExtra("GRAPHFILE", selection);
                 startActivity(change_to_acquire_data);
             }
@@ -42,7 +42,6 @@ public class FileSelectActivity extends AppCompatActivity implements AdapterView
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String file_choice = parent.getItemAtPosition(position).toString();
         selection = file_choice;
-        Log.d("Choice",file_choice);
     }
 
     @Override

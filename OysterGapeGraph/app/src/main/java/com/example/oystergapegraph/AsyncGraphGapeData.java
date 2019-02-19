@@ -13,14 +13,12 @@ public class AsyncGraphGapeData extends AsyncTask<String, Integer, char[]> {
     TextView textView;
     ProgressBar progressBar;
     Context context;
-    GapeGraph gapeGraph;
     String fileName;
 
     static final int number_of_tasks = 2;
     int progress_count;
 
-    AsyncGraphGapeData(Context context, GapeGraph gapeGraph, TextView textView, ProgressBar progressBar){
-        this.gapeGraph = gapeGraph;
+    AsyncGraphGapeData(Context context, TextView textView, ProgressBar progressBar){
         this.context = context;
         this.textView = textView;
         this.progressBar = progressBar;
@@ -68,9 +66,10 @@ public class AsyncGraphGapeData extends AsyncTask<String, Integer, char[]> {
         });
         if(bytes != null)
         {
-            gapeGraph.Set_Up_Graph(bytes, fileName);
-            progressBar.setVisibility(View.INVISIBLE);
-            UpdateProgress.turn_text_view_invisible(textView);
+            RetrieveDataActivity.data = bytes;
+            Intent change_to_graph_data = new Intent(context, GraphActivity.class);
+            context.startActivity(change_to_graph_data);
+            ((Activity)context).finish();
         }
         else
         {
