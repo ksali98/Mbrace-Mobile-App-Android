@@ -39,6 +39,10 @@ public class AsyncGraphGapeData extends AsyncTask<String, Integer, char[]> {
         {
             UpdateProgress.update_progress_text(textView,"Connecting To Server...");
             mbraceFTP.connect_to_server();
+            if(!mbraceFTP.ftp_client.isConnected())
+            {
+                return null;
+            }
         }
         publishProgress(1);
         UpdateProgress.update_progress_text(textView,"Retrieving Data From Server...");

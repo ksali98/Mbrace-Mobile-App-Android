@@ -31,6 +31,10 @@ public class AsyncGetFilenames extends AsyncTask<Void,Integer, List<String>> {
         {
             UpdateProgress.update_progress_text(textView,"Connecting To Server...");
             mbraceFTP.connect_to_server();
+            if(!MbraceFTP.ftp_client.isConnected())
+            {
+                return null;
+            }
         }
         publishProgress(1);
         UpdateProgress.update_progress_text(textView,"Getting Filenames...");
@@ -49,15 +53,22 @@ public class AsyncGetFilenames extends AsyncTask<Void,Integer, List<String>> {
     @Override
     protected void onPostExecute(List<String> strings) {
         super.onPostExecute(strings);
-        Intent move_to_file_select = new Intent(context, FileSelectActivity.class);
-        move_to_file_select.putStringArrayListExtra("FILENAMES", (ArrayList<String>)strings);
-        textView.post(new Runnable() {
-            @Override
-            public void run() {
-                textView.setText("Done!");
-            }
-        });
-        context.startActivity(move_to_file_select);
-        ((Activity)context).finish();
+        if(strings != null)
+        {
+            Intent move_to_file_select = new Intent(context, FileSelectActivity.class);
+            move_to_file_select.putStringArrayListExtra("FILENAMES", (ArrayList<String>)strings);
+            textView.post(new Runnable() {
+                @Override
+                public void run() {
+                    textView.setText("Done!");
+                }
+            });
+            context.startActivity(move_to_file_select);
+            ((Activity)context).finish();
+        }
+        else
+        {
+            UpdateProgress.update_progress_text(textView, "Unable to connect to server. Check connection.");
+        }
     }
 }
