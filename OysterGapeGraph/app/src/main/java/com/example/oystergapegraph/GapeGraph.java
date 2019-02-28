@@ -19,15 +19,15 @@ public class GapeGraph {
         chart = view_chart;
     }
 
-    public void Set_Up_Graph(char[] data_in_bytes, String fileName) {
+    public void Set_Up_Graph(char[] data_in_bytes, String fileName, boolean[] checkBox) {
         List<List<Entry>> sensors = new ArrayList<>();
         List<Character> gape_data = get_gape_data(data_in_bytes);
-
         for(int i = 0; i < number_of_sensors; i++)
         {
-            sensors.add(get_sensor_data(i, gape_data));
+            if(checkBox[i]) sensors.add(get_sensor_data(i, gape_data));
+            else sensors.add(null);
         }
-        List<ILineDataSet> dataSets = Create_Sensor_DataSets(sensors);
+        List<ILineDataSet> dataSets = Create_Sensor_DataSets(sensors, checkBox);
         LineData data = new LineData(dataSets);
         chart.setData(data);
         String fileName_NoExtension = fileName.split(Pattern.quote("."))[0];
@@ -35,15 +35,19 @@ public class GapeGraph {
         chart.invalidate();
     }
 
-    private List<ILineDataSet> Create_Sensor_DataSets(List<List<Entry>> sensors)
+    private List<ILineDataSet> Create_Sensor_DataSets(List<List<Entry>> sensors, boolean[] checkBox)
     {
         List<ILineDataSet> dataSets = new ArrayList<>();
-        int[] sensor_color = new int[]{Color.BLUE, Color.YELLOW, Color.GREEN, Color.RED, Color.CYAN, Color.MAGENTA};
+        int color_orange = 0xffff8c00;
+        int[] sensor_color = new int[]{Color.BLUE, color_orange, Color.GREEN, Color.RED, Color.CYAN, Color.MAGENTA};
         for(int i = 0; i < sensors.size(); i++)
         {
-            LineDataSet set = new LineDataSet(sensors.get(i), Integer.toString(i + 1));
-            set.setColor(sensor_color[i]);
-            dataSets.add(set);
+            if(checkBox[i])
+            {
+                LineDataSet set = new LineDataSet(sensors.get(i), Integer.toString(i + 1));
+                set.setColor(sensor_color[i]);
+                dataSets.add(set);
+            }
         }
         return dataSets;
     }

@@ -29,6 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_1"
+            android:checked="true"
+            android:onClick="On_CheckBox_Clicked"
             app:buttonTint="@color/blue" />
 
         <CheckBox
@@ -36,13 +38,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_2"
-            app:buttonTint="@color/yellow" />
+            android:checked="true"
+            android:onClick="On_CheckBox_Clicked"
+            app:buttonTint="@color/orange" />
 
         <CheckBox
             android:id="@+id/checkbox3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_3"
+            android:checked="true"
+            android:onClick="On_CheckBox_Clicked"
             app:buttonTint="@color/green" />
 
         <CheckBox
@@ -50,6 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_4"
+            android:checked="true"
+            android:onClick="On_CheckBox_Clicked"
             app:buttonTint="@color/red" />
 
         <CheckBox
@@ -57,6 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_5"
+            android:checked="true"
+            android:onClick="On_CheckBox_Clicked"
             app:buttonTint="@color/cyan" />
 
         <CheckBox
@@ -64,6 +74,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_6"
+            android:checked="true"
+            android:onClick="On_CheckBox_Clicked"
             app:buttonTint="@color/magenta" />
 
     </LinearLayout>
