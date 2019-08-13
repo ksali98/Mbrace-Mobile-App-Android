@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 public class GraphActivity extends AppCompatActivity {
     GapeGraph gapeGraph;
@@ -24,24 +26,37 @@ public class GraphActivity extends AppCompatActivity {
 
         switch (view.getId()) {
             case R.id.checkbox1:
-                checkbox[0] = checked ? true : false;
+                checkbox[0] = checked;
+                Make_Dataset_Invisible(0, checked);
                 break;
             case R.id.checkbox2:
-                checkbox[1] = checked ? true : false;
+                checkbox[1] = checked;
+                Make_Dataset_Invisible(1, checked);
                 break;
             case R.id.checkbox3:
-                checkbox[2] = checked ? true : false;
+                checkbox[2] = checked;
+                Make_Dataset_Invisible(2, checked);
                 break;
             case R.id.checkbox4:
-                checkbox[3] = checked ? true : false;
+                checkbox[3] = checked;
+                Make_Dataset_Invisible(3, checked);
                 break;
             case R.id.checkbox5:
-                checkbox[4] = checked ? true : false;
+                checkbox[4] = checked;
+                Make_Dataset_Invisible(4, checked);
                 break;
             case R.id.checkbox6:
-                checkbox[5] = checked ? true : false;
+                checkbox[5] = checked;
+                Make_Dataset_Invisible(5, checked);
                 break;
         }
-        gapeGraph.Set_Up_Graph(RetrieveDataActivity.data, RetrieveDataActivity.file_name, checkbox);
+        gapeGraph.Reset_Chart();
+    }
+
+    private void Make_Dataset_Invisible(int index, boolean checked)
+    {
+        ILineDataSet set = GapeGraph.Get_Sensor_Data_Sets().get(index);
+
+        set.setVisible(checked);
     }
 }

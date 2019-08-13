@@ -18,6 +18,7 @@ public class GapeGraph {
     GapeGraph(LineChart view_chart){
         chart = view_chart;
     }
+    static private List<ILineDataSet> sensor_datasets;
 
     public void Set_Up_Graph(char[] data_in_bytes, String fileName, boolean[] checkBox) {
         List<List<Entry>> sensors = new ArrayList<>();
@@ -27,12 +28,22 @@ public class GapeGraph {
             if(checkBox[i]) sensors.add(get_sensor_data(i, gape_data));
             else sensors.add(null);
         }
-        List<ILineDataSet> dataSets = Create_Sensor_DataSets(sensors, checkBox);
-        LineData data = new LineData(dataSets);
+        sensor_datasets = Create_Sensor_DataSets(sensors, checkBox);
+        LineData data = new LineData(sensor_datasets);
         chart.setData(data);
         String fileName_NoExtension = fileName.split(Pattern.quote("."))[0];
         chart.getDescription().setText(fileName_NoExtension);
         chart.invalidate();
+    }
+
+    public void Reset_Chart()
+    {
+        chart.invalidate();
+    }
+
+    static public List<ILineDataSet> Get_Sensor_Data_Sets()
+    {
+        return sensor_datasets;
     }
 
     private List<ILineDataSet> Create_Sensor_DataSets(List<List<Entry>> sensors, boolean[] checkBox)
@@ -42,11 +53,14 @@ public class GapeGraph {
         int[] sensor_color = new int[]{Color.BLUE, color_orange, Color.GREEN, Color.RED, Color.CYAN, Color.MAGENTA};
         for(int i = 0; i < sensors.size(); i++)
         {
-            if(checkBox[i])
+            LineDataSet set = new LineDataSet(sensors.get(i), Integer.toString(i + 1));
+            set.setColor(sensor_color[i]);
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            dataSets.add(set);
+            if(!checkBox[i])
             {
-                LineDataSet set = new LineDataSet(sensors.get(i), Integer.toString(i + 1));
-                set.setColor(sensor_color[i]);
-                dataSets.add(set);
+                set.setVisible(false);
             }
         }
         return dataSets;

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,14 +16,16 @@ public class AsyncGetFilenames extends AsyncTask<Void,Integer, List<String>> {
     ProgressBar progressBar;
     TextView textView;
     Context context;
+    Button retry_button;
 
     int progressCount;
     static final int number_of_tasks = 2;
-    AsyncGetFilenames(Context context , ProgressBar progress, TextView text)
+    AsyncGetFilenames(Context context , ProgressBar progress, TextView text, Button retry_button)
     {
         this.progressBar = progress;
         this.textView = text;
         this.context = context;
+        this.retry_button = retry_button;
         progressCount = 0;
     }
     @Override
@@ -65,10 +69,12 @@ public class AsyncGetFilenames extends AsyncTask<Void,Integer, List<String>> {
             });
             context.startActivity(move_to_file_select);
             ((Activity)context).finish();
+            retry_button.setVisibility(View.INVISIBLE);
         }
         else
         {
             UpdateProgress.update_progress_text(textView, "Unable to connect to server. Check connection.");
+            retry_button.setVisibility(View.VISIBLE);
         }
     }
 }
